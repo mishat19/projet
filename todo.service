@@ -1,0 +1,11 @@
+[Unit]
+Description=File Watcher Daemon
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/chemin/absolu/daemon
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

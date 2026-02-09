@@ -1,27 +1,13 @@
 CC = gcc
-CFLAGS = -Wall -std=c11 -O2 -pthread
-LDFLAGS = -lsqlite3 -lrt
+CFLAGS = -Wall -Wextra -lrt
 
-SRCDIR = src
-BINDIR = bin
+all: daemon worker
 
-DEPS = -Iinclude
+daemon: daemon.c
+	$(CC) $(CFLAGS) daemon.c -o daemon
 
-DAEMON = $(BINDIR)/todo-daemon
-CLIENT = $(BINDIR)/todo-client
-
-all: $(DAEMON) $(CLIENT)
-
-$(DAEMON): $(SRCDIR)/daemon.c $(SRCDIR)/db.c $(SRCDIR)/ipc.c | $(BINDIR)
-	$(CC) $(CFLAGS) $(DEPS) -o $@ $^ $(LDFLAGS)
-
-$(CLIENT): $(SRCDIR)/client.c | $(BINDIR)
-	$(CC) $(CFLAGS) $(DEPS) -o $@ $^ $(LDFLAGS)
-
-$(BINDIR):
-	mkdir -p $(BINDIR)
+worker: worker.c
+	$(CC) $(CFLAGS) worker.c -o worker
 
 clean:
-	rm -rf $(BINDIR) *.o
-
-.PHONY: all clean
+	rm -f daemon worker
