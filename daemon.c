@@ -37,7 +37,7 @@ void handle_signal(int sig) {
  * - Ferme les descripteurs standards (stdin, stdout, stderr)
  */
 void daemonize() {
-    pid_t pid = fork();
+    pid_t pid = fork(); // Création d'un processus
     if (pid < 0) exit(EXIT_FAILURE);
     if (pid > 0) exit(EXIT_SUCCESS); // Termine le processus père
 
